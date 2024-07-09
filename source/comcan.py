@@ -7,6 +7,7 @@ import os
 import threading
 import time
 
+
 class CANControlGUI:
     def __init__(self, root):
         self.root = root
@@ -39,8 +40,6 @@ class CANControlGUI:
         # Data for each message ID
         self.message_data = {}
         self.cycle_times = {}
-        self.tx_methods = {}
-        self.lock = threading.Lock()  # Lock for thread safety
 
         # Control Window
         control_frame = ttk.LabelFrame(self.root, text="Control")
@@ -195,14 +194,6 @@ class CANControlGUI:
             self.config_file_name = "Spontaneous Configuration"
         self.config_name_label.config(text=f"Configuration: {self.config_file_name}")
 
-        # Print GenSigDataID for MsgCRC1 and MsgCRC2 signals if they are assigned
-        if self.saved_msg_crc1_signal in self.signal_details:
-            gen_sig_data_id_1 = self.signal_details[self.saved_msg_crc1_signal].get('gen_sig_data_id', [])
-            print(f"GenSigDataID 1 for {self.saved_msg_crc1_signal}: {gen_sig_data_id_1}")
-        if self.saved_msg_crc2_signal in self.signal_details:
-            gen_sig_data_id_2 = self.signal_details[self.saved_msg_crc2_signal].get('gen_sig_data_id', [])
-            print(f"GenSigDataID 2 for {self.saved_msg_crc2_signal}: {gen_sig_data_id_2}")
-
         window.destroy()
 
     def browse_file(self):
@@ -215,7 +206,6 @@ class CANControlGUI:
         try:
             self.db = cantools.database.load_file(file_path)
             self.signals = [signal.name for message in self.db.messages for signal in message.signals]
-            
             self.target_speed_signal['values'] = self.signals
             self.actual_speed_signal['values'] = self.signals
             self.msg_counter1_signal['values'] = self.signals
@@ -224,11 +214,24 @@ class CANControlGUI:
             self.wakeup_signal['values'] = self.signals
             self.msg_crc1_signal['values'] = self.signals
             self.msg_crc2_signal['values'] = self.signals
-
             self.check_signal_conflicts()
+            self.extract_gensig_data_ids()  # Extract GenSigDataID values from the DBC file
             messagebox.showinfo("Success", "DBC file loaded successfully")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load DBC file: {e}")
+
+    def extract_gensig_data_ids(self):
+        self.saved_gen_sig_data_id_1 = []
+        self.saved_gen_sig_data_id_2 = []
+
+        for message in self.db.messages:
+            for signal in message.signals:
+                if signal.name == self.saved_msg_crc1_signal:
+                    self.saved_gen_sig_data_id_1 = signal.initial_value
+                    print(f"GenSigDataID 1: {self.saved_gen_sig_data_id_1}")
+                elif signal.name == self.saved_msg_crc2_signal:
+                    self.saved_gen_sig_data_id_2 = signal.initial_value
+                    print(f"GenSigDataID 2: {self.saved_gen_sig_data_id_2}")
 
     def check_signal_conflicts(self):
         bit_occupancy = {}
@@ -270,12 +273,10 @@ class CANControlGUI:
                         'message_name': message.name,
                         'message_length': message.length,
                         'cycle_time': message.cycle_time if hasattr(message, 'cycle_time') else 1000,
-                        'tx_method': message.send_type if hasattr(message, 'send_type') else "NoMsgSendType",
-                        'gen_sig_data_id': signal.gen_sig_data_id if hasattr(signal, 'gen_sig_data_id') else []
+                        'tx_method': message.tx_method if hasattr(message, 'tx_method') else 'Cyclic'
                     }
                     self.signal_details[signal_name] = signal_info
                     self.cycle_times[message.frame_id] = signal_info['cycle_time']
-                    self.tx_methods[message.frame_id] = signal_info['tx_method']
                     return signal_info
         return None
 
@@ -315,7 +316,8 @@ class CANControlGUI:
                 self.wakeup_signal.set(config['wakeup_signal'])
                 self.msg_crc1_signal.set(config['msg_crc1_signal'])
                 self.msg_crc2_signal.set(config['msg_crc2_signal'])
-
+                self.saved_gen_sig_data_id_1 = config.get('gen_sig_data_id_1', [])
+                self.saved_gen_sig_data_id_2 = config.get('gen_sig_data_id_2', [])
                 self.signal_details = config.get('signal_details', {})
 
                 # Trigger signal_selected for each signal to load its details
@@ -406,60 +408,55 @@ class CANControlGUI:
             self.prepare_signal_data(signal_info, target_speed_value)
 
     def prepare_signal_data(self, signal_info, signal_value):
-        with self.lock:
-            message_id = signal_info['message_id']
-            if message_id not in self.message_data:
-                self.message_data[message_id] = [0] * 8
+        message_id = signal_info['message_id']
+        if message_id not in self.message_data:
+            self.message_data[message_id] = [0] * 8
 
+        data = self.message_data[message_id]
+
+        # Ensure signal_value is an integer for bitwise operations
+        if isinstance(signal_value, float):
+            signal_value = int(signal_value)
+
+        data = self.set_signal_value_in_message(data, signal_info['start_bit'], signal_info['length'], signal_value, signal_info['byte_order'])
+
+        self.message_data[message_id] = data
+
+    def update_message_counter_and_crc(self, message_id):
+        if message_id in self.message_data:
             data = self.message_data[message_id]
 
-            # Ensure signal_value is an integer for bitwise operations
-            if isinstance(signal_value, float):
-                signal_value = int(signal_value)
+            if message_id == self.signal_details[self.saved_msg_counter1_signal]['message_id']:
+                counter_info = self.signal_details[self.saved_msg_counter1_signal]
+                new_cnt = (self.signal_counters[self.saved_msg_counter1_signal] + 1) % 16
+                self.signal_counters[self.saved_msg_counter1_signal] = new_cnt
+                data = self.set_signal_value_in_message(data, counter_info['start_bit'], counter_info['length'], new_cnt, counter_info['byte_order'])
+                data[7] = self.saved_gen_sig_data_id_1[new_cnt]
+                crc_info = self.signal_details[self.saved_msg_crc1_signal]
+                crc = self.calculate_crc8h2f(data)
+                data = self.set_signal_value_in_message(data, crc_info['start_bit'], crc_info['length'], crc, crc_info['byte_order'])
 
-            data = self.set_signal_value_in_message(data, signal_info['start_bit'], signal_info['length'], signal_value, signal_info['byte_order'])
+            if message_id == self.signal_details[self.saved_msg_counter2_signal]['message_id']:
+                counter_info = self.signal_details[self.saved_msg_counter2_signal]
+                new_cnt = (self.signal_counters[self.saved_msg_counter2_signal] + 1) % 16
+                self.signal_counters[self.saved_msg_counter2_signal] = new_cnt
+                data = self.set_signal_value_in_message(data, counter_info['start_bit'], counter_info['length'], new_cnt, counter_info['byte_order'])
+                data[7] = self.saved_gen_sig_data_id_2[new_cnt]
+                crc_info = self.signal_details[self.saved_msg_crc2_signal]
+                crc = self.calculate_crc8h2f(data)
+                data = self.set_signal_value_in_message(data, crc_info['start_bit'], crc_info['length'], crc, crc_info['byte_order'])
 
             self.message_data[message_id] = data
 
-    def update_message_counter_and_crc(self, message_id):
-        with self.lock:
-            if message_id in self.message_data:
-                data = self.message_data[message_id]
-
-                if message_id == self.signal_details[self.saved_msg_counter1_signal]['message_id']:
-                    counter_info = self.signal_details[self.saved_msg_counter1_signal]
-                    new_cnt = (self.signal_counters[self.saved_msg_counter1_signal] + 1) % 16
-                    self.signal_counters[self.saved_msg_counter1_signal] = new_cnt
-                    data = self.set_signal_value_in_message(data, counter_info['start_bit'], counter_info['length'], new_cnt, counter_info['byte_order'])
-                    if len(self.signal_details[self.saved_msg_crc1_signal]['gen_sig_data_id']) > new_cnt:
-                        data[7] = self.signal_details[self.saved_msg_crc1_signal]['gen_sig_data_id'][new_cnt]
-                    crc_info = self.signal_details[self.saved_msg_crc1_signal]
-                    crc = self.calculate_crc8h2f(data)
-                    data = self.set_signal_value_in_message(data, crc_info['start_bit'], crc_info['length'], crc, crc_info['byte_order'])
-
-                if message_id == self.signal_details[self.saved_msg_counter2_signal]['message_id']:
-                    counter_info = self.signal_details[self.saved_msg_counter2_signal]
-                    new_cnt = (self.signal_counters[self.saved_msg_counter2_signal] + 1) % 16
-                    self.signal_counters[self.saved_msg_counter2_signal] = new_cnt
-                    data = self.set_signal_value_in_message(data, counter_info['start_bit'], counter_info['length'], new_cnt, counter_info['byte_order'])
-                    if len(self.signal_details[self.saved_msg_crc2_signal]['gen_sig_data_id']) > new_cnt:
-                        data[7] = self.signal_details[self.saved_msg_crc2_signal]['gen_sig_data_id'][new_cnt]
-                    crc_info = self.signal_details[self.saved_msg_crc2_signal]
-                    crc = self.calculate_crc8h2f(data)
-                    data = self.set_signal_value_in_message(data, crc_info['start_bit'], crc_info['length'], crc, crc_info['byte_order'])
-
-                self.message_data[message_id] = data
-
     def send_message(self, message_id, data):
-        with self.lock:
-            self.update_message_counter_and_crc(message_id)
-            msg = can.Message(arbitration_id=message_id, data=data, dlc=8, is_extended_id=False)
-            try:
-                self.can_bus.send(msg)
-                print(f"Message sent: Timestamp: {time.time()}    ID: {message_id:03X}    Data: {msg.data.hex()}")
-                self.display_sent_message(msg)  # Display sent message in the CAN messages panel
-            except Exception as e:
-                print(f"Error sending message: {e}")
+        self.update_message_counter_and_crc(message_id)
+        msg = can.Message(arbitration_id=message_id, data=data, dlc=8, is_extended_id=False)
+        try:
+            self.can_bus.send(msg)
+            print(f"Message sent: Timestamp: {time.time()}    ID: {message_id:03X}    Data: {msg.data.hex()}")
+            self.display_sent_message(msg)  # Display sent message in the CAN messages panel
+        except Exception as e:
+            print(f"Error sending message: {e}")
 
     def display_sent_message(self, msg):
         message_id_hex = f"0x{msg.arbitration_id:03X}"
@@ -529,13 +526,13 @@ class CANControlGUI:
 
     def send_periodic_messages(self):
         while True:
-            with self.lock:
-                if self.can_bus:
-                    for message_id in list(self.message_data):  # Use list to avoid dictionary size change
-                        if self.tx_methods.get(message_id, "NoMsgSendType") == "Cyclic":
-                            cycle_time = self.cycle_times.get(message_id, 10) / 1000.0
-                            self.send_message(message_id, self.message_data[message_id])
-                            time.sleep(cycle_time)
+            if self.can_bus:
+                for message_id, data in self.message_data.items():
+                    signal_info = self.signal_details.get(message_id)
+                    if signal_info and signal_info['tx_method'] == 'Cyclic':
+                        cycle_time = self.cycle_times.get(message_id, 10) / 1000.0
+                        self.send_message(message_id, self.message_data[message_id])
+                        time.sleep(cycle_time)
 
 
 if __name__ == "__main__":
