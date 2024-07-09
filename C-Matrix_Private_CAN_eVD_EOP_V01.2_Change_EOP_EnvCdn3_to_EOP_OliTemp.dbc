@@ -1,0 +1,520 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: TesterDebugDummy EOP PEINV
+VAL_TABLE_ StBrdg 1 "current feed (mot) is active" 0 "current feed (mot) is not active" ;
+VAL_TABLE_ StRqPos 3 "Engeage / connected" 4 "Prepare_Disengage/Disconnecting" 2 "Prepare_engage/Connecting" 1 "Disengage / disconnecing" 0 "NoRequest" ;
+VAL_TABLE_ RqPos 3 "engeage / connecting" 4 "erepare_ disengage / disconnect" 2 "prepare_engage / connnect" 1 "disengage / connect" 0 "no request" ;
+VAL_TABLE_ StParklock 6 "PARKLOCK pos unknown" 3 "engeaged" 7 "PARKLOCK error" 4 "prepare_disengage" 2 "prepare_engage" 1 "disengaged" 0 "intermediate" ;
+VAL_TABLE_ UI16_init 65535 "init or value not available" ;
+VAL_TABLE_ FltCodeUi7 127 "init or no fault is active" ;
+VAL_TABLE_ UI4_initExceeded 15 "init or value not available" 14 "sensor value exceeded" ;
+VAL_TABLE_ UI4_init 15 "init or value not available" ;
+VAL_TABLE_ UI10_initExceeded 1023 "init or value not available" 1022 "sensor value exceeded" ;
+VAL_TABLE_ UI10_init 1023 "init or value not available" ;
+VAL_TABLE_ Wakeup 4 "sleep" 3 "active -> sleep (gotosleep)" 2 "active" 1 "sleep -> active (wakeup)" 0 "Undefined" ;
+VAL_TABLE_ RqFltIni 1 "reset the FMemory" 0 "no reset of FMemory" ;
+VAL_TABLE_ StFltIni 2 "FMemory initialization done" 1 "FMemory initialization active" 0 "FMemory active" ;
+VAL_TABLE_ Ignition 4 "Ignition off" 3 "Ignition on -> off" 2 "Ignition on" 1 "Ignition off -> on" 0 "Undefined" ;
+VAL_TABLE_ FltTestPnd 1 "No test condition present" 0 "Test condition present" ;
+VAL_TABLE_ UI12_init 4095 "init or value not available" ;
+VAL_TABLE_ StRqSev 1 "on" 0 "off" ;
+VAL_TABLE_ RqBrdg 1 "current feed (motor) is allowed" 0 "current feed (motor) not allowed" ;
+VAL_TABLE_ HWState 7 "unkown" 6 "not used" 5 "not used" 4 "not used" 3 "D sample" 2 "C sample" 1 "B sample" 0 "A sample" ;
+VAL_TABLE_ MotOperMod 4 "Motor Fail Safe State" 3 "Motor Degradation Mode" 2 "Motor Running" 1 "Motor StartUp" 0 "Motor StandBy" ;
+VAL_TABLE_ FltCfmt 1 "matured failure result" 0 "no failure detected" ;
+VAL_TABLE_ StDcu 5 "Disconnecting II" 3 "Connected" 7 "DCUError" 6 "DCUPosUnknown" 4 "Disconnecting I" 2 "Connecting" 1 "Disconnected" 0 "Idle" ;
+VAL_TABLE_ UI12_initExceeded 4095 "init or value not available" 4094 "sensor value exceeded" ;
+VAL_TABLE_ StEcu 7 "unkown" 5 "overrun" 4 "shutDownMode" 3 "safe state" 2 "normal run" 1 "switchOfPathTest" 0 "initialization" ;
+VAL_TABLE_ UI8_init 255 "init or value not available" ;
+VAL_TABLE_ UI8_initExceeded 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_TABLE_ ErrConfDef 1 "matured failure result" 0 "no failure detected" ;
+VAL_TABLE_ Err_Desc 1 "No test condition present" 0 "no failure detected" ;
+
+
+BO_ 1634 EOP_DBG03: 8 EOP
+
+BO_ 1633 EOP_DBG02: 8 EOP
+
+BO_ 1632 EOP_DBG01: 8 EOP
+ SG_ EOP_DBG_IMotQ : 8|8@1+ (0.5,-63) [-63|64.5] "A"  TesterDebugDummy
+ SG_ EOP_DBG_IMotD : 0|8@1+ (0.5,-63) [-63|64.5] "A"  TesterDebugDummy
+
+BO_ 1537 CLIENT_EOP_XCP: 8 TesterDebugDummy
+ SG_ CLIENT_EOP_XCP_byte7 : 56|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte6 : 48|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte5 : 40|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte4 : 32|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte3 : 24|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte2 : 16|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte1 : 8|8@1+ (1,0) [0|255] ""  EOP
+ SG_ CLIENT_EOP_XCP_byte0 : 0|8@1+ (1,0) [0|255] ""  EOP
+
+BO_ 1569 EOP_CLIENT_XCP: 8 EOP
+ SG_ EOP_CLIENT_XCP_byte7 : 56|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte6 : 48|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte5 : 40|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte4 : 32|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte3 : 24|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte2 : 16|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte1 : 8|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+ SG_ EOP_CLIENT_XCP_byte0 : 0|8@1+ (1,0) [0|255] ""  TesterDebugDummy
+
+BO_ 1793 PEINV_EOP_UDS: 8 PEINV
+ SG_ PEINV_EOP_UDS_byte7 : 56|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte6 : 48|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte5 : 40|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte4 : 32|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte3 : 24|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte2 : 16|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte1 : 8|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_UDS_byte0 : 0|8@1+ (1,0) [0|255] ""  EOP
+
+BO_ 1872 PEINV_FF_UDS: 8 PEINV
+ SG_ PEINV_FF_UDS_byte7 : 56|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte6 : 48|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte5 : 40|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte4 : 32|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte3 : 24|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte2 : 16|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte1 : 8|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_FF_UDS_byte0 : 0|8@1+ (1,0) [0|255] ""  EOP
+
+BO_ 1825 EOP_PEINV_UDS: 8 EOP
+ SG_ EOP_PEINV_UDS_byte0 : 0|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte7 : 56|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte6 : 48|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte5 : 40|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte4 : 32|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte3 : 24|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte2 : 16|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_PEINV_UDS_byte1 : 8|8@1+ (1,0) [0|255] ""  PEINV
+
+BO_ 821 EOP_11: 8 EOP
+ SG_ EOP_CycFltCfmt5 : 20|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCfmt4 : 19|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCfmt3 : 18|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCfmt2 : 17|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCfmt1 : 16|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_StFltIni : 12|2@1+ (1,0) [0|3] ""  PEINV
+ SG_ EOP_CycFltCod5 : 56|7@1+ (1,0) [0|127] ""  PEINV
+ SG_ EOP_CycFltTestPnd5 : 63|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCod4 : 48|7@1+ (1,0) [0|127] ""  PEINV
+ SG_ EOP_CycFltTestPnd4 : 55|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCod3 : 40|7@1+ (1,0) [0|127] ""  PEINV
+ SG_ EOP_CycFltTestPnd3 : 47|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltTestPnd2 : 39|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_11_MsgCRC : 0|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_11_MsgCnt : 8|4@1+ (1,0) [0|15] ""  PEINV
+ SG_ EOP_CycFltCod1 : 24|7@1+ (1,0) [0|127] ""  PEINV
+ SG_ EOP_CycFltTestPnd1 : 31|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_CycFltCod2 : 32|7@1+ (1,0) [0|127] ""  PEINV
+
+BO_ 816 EOP_10: 8 EOP
+ SG_ EOP_StFltIni : 12|2@1+ (1,0) [0|3] ""  PEINV
+ SG_ EOP_EnvCdn2 : 48|16@1+ (1,0) [0|65535] ""  PEINV
+ SG_ EOP_OilTemp : 24|8@1+ (1,-40) [-40|213] "¡æ"  PEINV
+ SG_ EOP_ActFltCfmt : 15|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_ActFltCod : 16|7@1+ (1,0) [0|127] ""  PEINV
+ SG_ EOP_ActFltTestPnd : 23|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_EnvCdn1 : 32|16@1+ (1,0) [0|65535] ""  PEINV
+ SG_ EOP_10_MsgCRC : 0|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_10_MsgCnt : 8|4@1+ (1,0) [0|15] ""  PEINV
+
+BO_ 256 PEINV: 8 PEINV
+ SG_ PEINV_RqWakeup : 16|3@1+ (1,0) [0|7] ""  EOP
+ SG_ PEINV_MsgCnt : 8|4@1+ (1,0) [0|15] ""  EOP
+ SG_ PEINV_MsgCRC : 0|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_RqFltIni : 15|1@1+ (1,0) [0|1] ""  EOP
+ SG_ PEINV_StIgn : 12|3@1+ (1,0) [0|7] ""  EOP
+
+BO_ 112 PEINV_EOP: 8 PEINV
+ SG_ PEINV_EOP_TOil : 32|8@1+ (1,-40) [-40|215] "°C"  EOP
+ SG_ PEINV_EOP_RqSevFctOff : 15|1@1+ (1,0) [0|0] ""  EOP
+ SG_ PEINV_EOP_RqSevAct : 14|1@1+ (1,0) [0|0] ""  EOP
+ SG_ PEINV_EOP_MsgCRC : 0|8@1+ (1,0) [0|255] ""  EOP
+ SG_ PEINV_EOP_MsgCnt : 8|4@1+ (1,0) [0|15] ""  EOP
+ SG_ PEINV_EOP_RqBrdg : 12|1@1+ (1,0) [0|1] ""  EOP
+ SG_ PEINV_EOP_RqN : 16|12@1+ (4,-8188) [-8188|8192] "rpm"  EOP
+
+BO_ 1056 EOP_15: 8 EOP
+ SG_ EOP_15_MsgCRC : 0|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_15_MsgCnt : 8|4@1+ (1,0) [0|15] ""  PEINV
+ SG_ EOP_SWData : 56|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_SWVariant : 48|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_SWMinor : 40|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_SWMain : 32|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_HWVariant : 24|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_HWPhase : 16|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_HWState : 12|3@1+ (1,0) [0|7] ""  PEINV
+
+BO_ 117 EOP_01: 8 EOP
+ SG_ EOP_StBrdg : 12|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_StSevFctOff : 28|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_StSevAct : 29|1@1+ (1,0) [0|1] ""  PEINV
+ SG_ EOP_01_MsgCRC : 0|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_01_MsgCnt : 8|4@1+ (1,0) [0|15] ""  PEINV
+ SG_ EOP_StEop : 13|3@1+ (1,0) [0|7] ""  PEINV
+ SG_ EOP_NActMot : 16|12@1+ (4,-8188) [-8188|8192] "rpm"  PEINV
+
+BO_ 368 EOP_02: 8 EOP
+ SG_ EOP_UCL30 : 24|8@1+ (0.2,0) [0|51] "V"  PEINV
+ SG_ EOP_TEcu : 32|8@1+ (1,-40) [-40|213] "¡æ"  PEINV
+ SG_ EOP_ICL30 : 16|8@1+ (0.2,0) [0|51] "A"  PEINV
+ SG_ EOP_02_MsgCRC : 0|8@1+ (1,0) [0|255] ""  PEINV
+ SG_ EOP_02_MsgCnt : 8|4@1+ (1,0) [0|15] ""  PEINV
+ SG_ EOP_StEcu : 40|4@1+ (1,0) [0|15] ""  PEINV
+
+
+
+CM_ "Private CAN-Matrix used for ZF-Projects with Inverter and Smart Actor Oil-Pump";
+CM_ BO_ 1537 "XCP Request Message from PEINV to EOP";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte7 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte6 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte5 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte4 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte3 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte2 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte1 "zu klären, ob relevant";
+CM_ SG_ 1537 CLIENT_EOP_XCP_byte0 "zu klären, ob relevant";
+CM_ BO_ 1569 "XCP Response Message from EOP to PEINV";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte7 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte6 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte5 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte4 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte3 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte2 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte1 "zu klären, ob relevant";
+CM_ SG_ 1569 EOP_CLIENT_XCP_byte0 "zu klären, ob relevant";
+CM_ BO_ 1793 "UDS Request Message from PEINV to EOP";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte7 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte6 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte5 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte4 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte3 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte2 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte1 "zu klären, ob relevant";
+CM_ SG_ 1793 PEINV_EOP_UDS_byte0 "zu klären, ob relevant";
+CM_ BO_ 1872 "UDS Request Message from PEINV to all (functional request";
+CM_ SG_ 1872 PEINV_FF_UDS_byte7 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte6 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte5 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte4 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte3 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte2 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte1 "zu klären, ob relevant";
+CM_ SG_ 1872 PEINV_FF_UDS_byte0 "zu klären, ob relevant";
+CM_ BO_ 1825 "UDS Response Message from EOP to PEINV";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte0 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte7 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte6 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte5 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte4 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte3 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte2 "zu klären, ob relevant";
+CM_ SG_ 1825 EOP_PEINV_UDS_byte1 "zu klären, ob relevant";
+CM_ SG_ 821 EOP_11_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 26)";
+CM_ SG_ 821 EOP_11_MsgCnt "AUTOSAR Profil 2";
+CM_ SG_ 816 EOP_ActFltCfmt "Spantan message shall be triggered on signal change and the corresponding fault code is updateed at PDU";
+CM_ SG_ 816 EOP_10_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 21)";
+CM_ SG_ 816 EOP_10_MsgCnt "AUTOSAR Profil 2";
+CM_ SG_ 256 PEINV_RqWakeup "every signal change shall be send for ~100 ms";
+CM_ SG_ 256 PEINV_MsgCnt "AUTOSAR Profil 2";
+CM_ SG_ 256 PEINV_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 41)";
+CM_ SG_ 112 PEINV_EOP_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 49)";
+CM_ SG_ 112 PEINV_EOP_MsgCnt "AUTOSAR Profil 2";
+CM_ SG_ 1056 EOP_15_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 28";
+CM_ SG_ 1056 EOP_15_MsgCnt "AUTOSAR Profil 2";
+CM_ SG_ 1056 EOP_SWData "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 1056 EOP_SWVariant "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 1056 EOP_SWMinor "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 1056 EOP_SWMain "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 1056 EOP_HWVariant "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 1056 EOP_HWPhase "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 1056 EOP_HWState "numeric value, this value shall be coordinated with ZF";
+CM_ SG_ 117 EOP_01_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 16)";
+CM_ SG_ 117 EOP_01_MsgCnt "AUTOSAR Profil 2";
+CM_ SG_ 117 EOP_NActMot "ASIL A";
+CM_ SG_ 368 EOP_02_MsgCRC "AUTOSAR Profil 2
+(DataID Line Nr. 18)";
+CM_ SG_ 368 EOP_02_MsgCnt "AUTOSAR Profil 2";
+BA_DEF_  "Manufacturer" ENUM  "Vector";
+BA_DEF_ BO_  "GenMsgILSupport" ENUM  "no","yes";
+BA_DEF_ BO_  "DiagState" ENUM  "no","yes";
+BA_DEF_ BO_  "DiagResponse" ENUM  "no","yes";
+BA_DEF_ BO_  "DiagRequest" ENUM  "no","yes";
+BA_DEF_ SG_  "GenSigFuncType" ENUM  "NoFunction","MsgCounter","CRC-8","XOR","XOR-2","DatedBit","SW-KL15","not-used","Constant","Protocol","CRC-8-SAE_J1850","PROFILE_DAI_BR222_ID","PROFILE_DAI_BR222_noID","PROFILE_DAI_SAEJ","PROFILE_02";
+BA_DEF_ SG_  "GenSigDataID" STRING ;
+BA_DEF_ BU_  "NmAsrNode" ENUM  "no","yes";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType","OnChangeAndIfActive","OnChangeAndIfActiveWithRepetition","NoMsgSendType";
+BA_DEF_ SG_  "GenSigStartValue" INT -2147483648 2147483647;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 100000;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclic","not_used","not_used","not_used","not_used","not_used","not_used","IfActive","NoMsgSendType";
+BA_DEF_ BO_  "GenMsgPDUConstants" STRING ;
+BA_DEF_ BO_  "GenMsgNrOfRepetition" INT 0 100;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 0 100000;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 65535;
+BA_DEF_ BO_  "GenMsgChkConstant" INT 0 4095;
+BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "CANoeJitterMax" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMin" INT 0 0;
+BA_DEF_ BU_  "CANoeDrift" INT 0 0;
+BA_DEF_ BU_  "CANoeStartDelay" INT 0 0;
+BA_DEF_  "Baudrate" INT 1 1000000;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "Manufacturer" "Vector";
+BA_DEF_DEF_  "GenMsgILSupport" "no";
+BA_DEF_DEF_  "DiagState" "no";
+BA_DEF_DEF_  "DiagResponse" "no";
+BA_DEF_DEF_  "DiagRequest" "no";
+BA_DEF_DEF_  "GenSigFuncType" "NoFunction";
+BA_DEF_DEF_  "GenSigDataID" "0xFF";
+BA_DEF_DEF_  "NmAsrNode" "no";
+BA_DEF_DEF_  "GenSigSendType" "Cyclic";
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "VFrameFormat" "ExtendedCAN_FD";
+BA_DEF_DEF_  "GenMsgCycleTime" 10;
+BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
+BA_DEF_DEF_  "GenMsgSendType" "Cyclic";
+BA_DEF_DEF_  "GenMsgPDUConstants" "";
+BA_DEF_DEF_  "GenMsgNrOfRepetition" 0;
+BA_DEF_DEF_  "GenMsgDelayTime" 0;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgChkConstant" 0;
+BA_DEF_DEF_  "CANFD_BRS" "1";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "CANoeJitterMax" 0;
+BA_DEF_DEF_  "CANoeJitterMin" 0;
+BA_DEF_DEF_  "CANoeDrift" 0;
+BA_DEF_DEF_  "CANoeStartDelay" 0;
+BA_DEF_DEF_  "Baudrate" 500000;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "BusType" "CAN";
+BA_ "DBName" "PrivateCAN";
+BA_ "GenMsgSendType" BO_ 1634 8;
+BA_ "VFrameFormat" BO_ 1634 0;
+BA_ "GenMsgSendType" BO_ 1633 8;
+BA_ "VFrameFormat" BO_ 1633 0;
+BA_ "GenMsgSendType" BO_ 1632 8;
+BA_ "VFrameFormat" BO_ 1632 0;
+BA_ "GenMsgSendType" BO_ 1537 8;
+BA_ "VFrameFormat" BO_ 1537 0;
+BA_ "GenMsgCycleTime" BO_ 1537 0;
+BA_ "GenMsgSendType" BO_ 1569 8;
+BA_ "GenMsgCycleTime" BO_ 1569 0;
+BA_ "VFrameFormat" BO_ 1569 0;
+BA_ "DiagRequest" BO_ 1793 1;
+BA_ "GenMsgSendType" BO_ 1793 8;
+BA_ "GenMsgCycleTime" BO_ 1793 0;
+BA_ "VFrameFormat" BO_ 1793 0;
+BA_ "DiagState" BO_ 1872 1;
+BA_ "DiagRequest" BO_ 1872 0;
+BA_ "GenMsgSendType" BO_ 1872 8;
+BA_ "GenMsgCycleTime" BO_ 1872 0;
+BA_ "VFrameFormat" BO_ 1872 0;
+BA_ "DiagResponse" BO_ 1825 1;
+BA_ "GenMsgSendType" BO_ 1825 8;
+BA_ "GenMsgCycleTime" BO_ 1825 0;
+BA_ "VFrameFormat" BO_ 1825 0;
+BA_ "GenMsgILSupport" BO_ 821 1;
+BA_ "VFrameFormat" BO_ 821 0;
+BA_ "GenMsgILSupport" BO_ 816 1;
+BA_ "GenMsgSendType" BO_ 816 8;
+BA_ "VFrameFormat" BO_ 816 0;
+BA_ "GenMsgCycleTime" BO_ 816 20;
+BA_ "GenMsgDelayTime" BO_ 816 5;
+BA_ "GenMsgILSupport" BO_ 256 1;
+BA_ "VFrameFormat" BO_ 256 0;
+BA_ "GenMsgSendType" BO_ 256 0;
+BA_ "GenMsgILSupport" BO_ 112 1;
+BA_ "VFrameFormat" BO_ 112 0;
+BA_ "GenMsgILSupport" BO_ 1056 1;
+BA_ "GenMsgSendType" BO_ 1056 0;
+BA_ "VFrameFormat" BO_ 1056 0;
+BA_ "GenMsgCycleTime" BO_ 1056 100;
+BA_ "GenMsgILSupport" BO_ 117 1;
+BA_ "GenMsgSendType" BO_ 117 0;
+BA_ "VFrameFormat" BO_ 117 0;
+BA_ "GenMsgILSupport" BO_ 368 1;
+BA_ "VFrameFormat" BO_ 368 0;
+BA_ "GenSigStartValue" SG_ 1632 EOP_DBG_IMotQ 255;
+BA_ "GenSigStartValue" SG_ 1632 EOP_DBG_IMotD 255;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte7 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte6 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte5 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte4 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte3 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte2 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte1 7;
+BA_ "GenSigSendType" SG_ 1537 CLIENT_EOP_XCP_byte0 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte7 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte6 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte5 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte4 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte3 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte2 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte1 7;
+BA_ "GenSigSendType" SG_ 1569 EOP_CLIENT_XCP_byte0 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte7 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte6 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte5 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte4 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte3 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte2 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte1 7;
+BA_ "GenSigSendType" SG_ 1793 PEINV_EOP_UDS_byte0 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte7 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte6 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte5 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte4 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte3 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte2 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte1 7;
+BA_ "GenSigSendType" SG_ 1872 PEINV_FF_UDS_byte0 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte0 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte7 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte6 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte5 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte4 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte3 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte2 7;
+BA_ "GenSigSendType" SG_ 1825 EOP_PEINV_UDS_byte1 7;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltCod5 127;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltTestPnd5 1;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltCod4 127;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltTestPnd4 1;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltCod3 127;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltTestPnd3 1;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltTestPnd2 1;
+BA_ "GenSigDataID" SG_ 821 EOP_11_MsgCRC "39, 175, 13, 15 49, 40, 145, 209, 184, 197, 98, 107, 118, 202, 100, 99";
+BA_ "GenSigFuncType" SG_ 821 EOP_11_MsgCRC 14;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltCod1 127;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltTestPnd1 1;
+BA_ "GenSigStartValue" SG_ 821 EOP_CycFltCod2 127;
+BA_ "GenSigStartValue" SG_ 816 EOP_EnvCdn2 65535;
+BA_ "GenSigStartValue" SG_ 816 EOP_OilTemp 255;
+BA_ "GenSigSendType" SG_ 816 EOP_ActFltCfmt 3;
+BA_ "GenSigStartValue" SG_ 816 EOP_ActFltCod 127;
+BA_ "GenSigStartValue" SG_ 816 EOP_ActFltTestPnd 1;
+BA_ "GenSigStartValue" SG_ 816 EOP_EnvCdn1 65535;
+BA_ "GenSigDataID" SG_ 816 EOP_10_MsgCRC "203, 16, 84, 189, 56, 135, 146, 117, 49, 247, 47, 109, 88, 66, 232, 85";
+BA_ "GenSigFuncType" SG_ 816 EOP_10_MsgCRC 14;
+BA_ "GenSigDataID" SG_ 256 PEINV_MsgCRC "182, 105, 134, 70, 17, 233, 219, 191, 121, 195, 244, 176, 241, 232, 94, 250";
+BA_ "GenSigFuncType" SG_ 256 PEINV_MsgCRC 14;
+BA_ "GenSigStartValue" SG_ 112 PEINV_EOP_TOil 255;
+BA_ "GenSigDataID" SG_ 112 PEINV_EOP_MsgCRC "50, 83, 249, 88, 99, 55, 53, 218, 32, 148, 1, 87, 227, 121, 111, 39";
+BA_ "GenSigFuncType" SG_ 112 PEINV_EOP_MsgCRC 14;
+BA_ "GenSigStartValue" SG_ 112 PEINV_EOP_RqN 4095;
+BA_ "GenSigDataID" SG_ 1056 EOP_15_MsgCRC "148, 221, 7, 229, 19, 81, 190, 49, 200, 67, 41, 82, 170, 169, 230, 197";
+BA_ "GenSigFuncType" SG_ 1056 EOP_15_MsgCRC 14;
+BA_ "GenSigStartValue" SG_ 1056 EOP_SWData 255;
+BA_ "GenSigStartValue" SG_ 1056 EOP_SWVariant 255;
+BA_ "GenSigStartValue" SG_ 1056 EOP_SWMinor 255;
+BA_ "GenSigStartValue" SG_ 1056 EOP_SWMain 255;
+BA_ "GenSigStartValue" SG_ 1056 EOP_HWVariant 255;
+BA_ "GenSigStartValue" SG_ 1056 EOP_HWPhase 255;
+BA_ "GenSigStartValue" SG_ 1056 EOP_HWState 7;
+BA_ "GenSigDataID" SG_ 117 EOP_01_MsgCRC "149, 178, 48, 27, 29, 185, 17, 203, 148, 68, 204, 36, 101, 195, 44, 16";
+BA_ "GenSigFuncType" SG_ 117 EOP_01_MsgCRC 14;
+BA_ "GenSigStartValue" SG_ 117 EOP_NActMot 4095;
+BA_ "GenSigStartValue" SG_ 368 EOP_UCL30 255;
+BA_ "GenSigStartValue" SG_ 368 EOP_TEcu 255;
+BA_ "GenSigStartValue" SG_ 368 EOP_ICL30 255;
+BA_ "GenSigDataID" SG_ 368 EOP_02_MsgCRC "160, 145, 248, 202, 149, 236, 182, 34, 83, 178, 198, 196, 106, 105, 48, 207 ";
+BA_ "GenSigFuncType" SG_ 368 EOP_02_MsgCRC 14;
+BA_ "GenSigStartValue" SG_ 368 EOP_StEcu 7;
+VAL_ 1632 EOP_DBG_IMotQ 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_ 1632 EOP_DBG_IMotD 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_ 821 EOP_CycFltCfmt5 1 "matured failure result" 0 "no failure detected" ;
+VAL_ 821 EOP_CycFltCfmt4 1 "matured failure result" 0 "no failure detected" ;
+VAL_ 821 EOP_CycFltCfmt3 1 "matured failure result" 0 "no failure detected" ;
+VAL_ 821 EOP_CycFltCfmt2 1 "matured failure result" 0 "no failure detected" ;
+VAL_ 821 EOP_CycFltCfmt1 1 "matured failure result" 0 "no failure detected" ;
+VAL_ 821 EOP_StFltIni 2 "FMemory initialization done" 1 "FMemory initialization active" 0 "FMemory active" ;
+VAL_ 821 EOP_CycFltCod5 127 "init or no fault is active" ;
+VAL_ 821 EOP_CycFltTestPnd5 1 "No test condition present" 0 "Test condition present" ;
+VAL_ 821 EOP_CycFltCod4 127 "init or no fault is active" ;
+VAL_ 821 EOP_CycFltTestPnd4 1 "No test condition present" 0 "Test condition present" ;
+VAL_ 821 EOP_CycFltCod3 127 "init or no fault is active" ;
+VAL_ 821 EOP_CycFltTestPnd3 1 "No test condition present" 0 "Test condition present" ;
+VAL_ 821 EOP_CycFltTestPnd2 1 "No test condition present" 0 "Test condition present" ;
+VAL_ 821 EOP_CycFltCod1 127 "init or no fault is active" ;
+VAL_ 821 EOP_CycFltTestPnd1 1 "No test condition present" 0 "Test condition present" ;
+VAL_ 821 EOP_CycFltCod2 127 "init or no fault is active" ;
+VAL_ 816 EOP_StFltIni 2 "FMemory initialization done" 1 "FMemory initialization active" 0 "FMemory active" ;
+VAL_ 816 EOP_EnvCdn2 65535 "init or value not available" ;
+VAL_ 816 EOP_OilTemp 255 "init or value not available" ;
+VAL_ 816 EOP_ActFltCfmt 1 "matured failure result" 0 "no failure detected" ;
+VAL_ 816 EOP_ActFltCod 127 "init or no fault is active" ;
+VAL_ 816 EOP_ActFltTestPnd 1 "No test condition present" 0 "Test condition present" ;
+VAL_ 816 EOP_EnvCdn1 65535 "init or value not available" ;
+VAL_ 256 PEINV_RqWakeup 4 "sleep" 3 "active -> sleep (gotosleep)" 2 "active" 1 "sleep -> active (wakeup)" 0 "Undefined" ;
+VAL_ 256 PEINV_RqFltIni 1 "reset the FMemory" 0 "no reset of FMemory" ;
+VAL_ 256 PEINV_StIgn 4 "Ignition off" 3 "Ignition on -> off" 2 "Ignition on" 1 "Ignition off -> on" 0 "Undefined" ;
+VAL_ 112 PEINV_EOP_TOil 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_ 112 PEINV_EOP_RqSevFctOff 1 "on" 0 "off" ;
+VAL_ 112 PEINV_EOP_RqSevAct 1 "on" 0 "off" ;
+VAL_ 112 PEINV_EOP_RqBrdg 1 "current feed (motor) is allowed" 0 "current feed (motor) not allowed" ;
+VAL_ 112 PEINV_EOP_RqN 4095 "init or value not available" ;
+VAL_ 1056 EOP_SWData 255 "init or value not available" ;
+VAL_ 1056 EOP_SWVariant 255 "init or value not available" ;
+VAL_ 1056 EOP_SWMinor 255 "init or value not available" ;
+VAL_ 1056 EOP_SWMain 255 "init or value not available" ;
+VAL_ 1056 EOP_HWVariant 255 "init or value not available" ;
+VAL_ 1056 EOP_HWPhase 255 "init or value not available" ;
+VAL_ 1056 EOP_HWState 7 "unkown" 6 "not used" 5 "not used" 4 "not used" 3 "D sample" 2 "C sample" 1 "B sample" 0 "A sample" ;
+VAL_ 117 EOP_StBrdg 1 "current feed (mot) is active" 0 "current feed (mot) is not active" ;
+VAL_ 117 EOP_StSevFctOff 1 "on" 0 "off" ;
+VAL_ 117 EOP_StSevAct 1 "on" 0 "off" ;
+VAL_ 117 EOP_StEop 4 "Safe State / emergency stop" 3 "Motor Degradation Mode" 2 "Motor Running" 1 "Motor StartUp" 0 "Motor StandBy" ;
+VAL_ 117 EOP_NActMot 4095 "init or value not available" 4094 "sensor value exceeded" ;
+VAL_ 368 EOP_UCL30 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_ 368 EOP_TEcu 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_ 368 EOP_ICL30 255 "init or value not available" 254 "sensor value exceeded" ;
+VAL_ 368 EOP_StEcu 7 "unkown" 5 "overrun" 4 "shutDownMode" 3 "safe state" 2 "normal run" 1 "switchOfPathTest" 0 "initialization" ;
+
