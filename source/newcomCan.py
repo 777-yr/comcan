@@ -100,6 +100,9 @@ class CANControlGUI:
         self.periodic_thread.daemon = True
         self.periodic_thread.start()
 
+        # Wakeup signal deactivation timer
+        self.wakeup_deactivation_timer = None
+
     def open_configure_window(self):
         config_window = Toplevel(self.root)
         config_window.title("Configuration")
@@ -406,11 +409,24 @@ class CANControlGUI:
             self.prepare_signal_data(signal_info, self.activate_motor.get())
 
     def handle_wakeup_signal(self, *args):
+        if self.wakeup_deactivation_timer:
+            self.root.after_cancel(self.wakeup_deactivation_timer)
+            self.wakeup_deactivation_timer = None
+
         if self.can_bus and self.saved_wakeup_signal in self.signal_details:
             signal_info = self.signal_details[self.saved_wakeup_signal]
             value = 1 if self.wakeup_signal_active.get() else 0
             self.signal_values[self.saved_wakeup_signal] = value
             self.prepare_signal_data(signal_info, value)
+
+        if not self.wakeup_signal_active.get():
+            self.wakeup_deactivation_timer = self.root.after(3000, self.deactivate_wakeup_signal)
+
+    def deactivate_wakeup_signal(self):
+        if self.can_bus and self.saved_wakeup_signal in self.signal_details:
+            signal_info = self.signal_details[self.saved_wakeup_signal]
+            self.signal_values[self.saved_wakeup_signal] = 0
+            self.prepare_signal_data(signal_info, 0)
 
     def send_target_speed(self, event):
         if self.can_bus and self.saved_target_speed_signal in self.signal_details:
